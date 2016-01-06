@@ -11,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -24,7 +24,7 @@ public class EstimateCosts extends Application {
         
         primaryStage.setTitle("Managers tool");
         GridPane grid = new GridPane();                                 //GridPane object and assigns it to the variable named grid
-        grid.setAlignment(Pos.BOTTOM_LEFT);                             //Alignment property changes the default position of the grid from the top left of the scene to the center
+        grid.setAlignment(Pos.CENTER);                             //Alignment property changes the default position of the grid from the top left of the scene to the center
         grid.setHgap(7);                                       
         grid.setVgap(7);                                                //gap properties manage the spacing between the rows and columns
         grid.setPadding(new Insets(35, 35, 35, 35));                    //padding property manages the space around the edges of the grid pane. In here each side has 25 pixels padding
@@ -42,13 +42,25 @@ public class EstimateCosts extends Application {
         TextField endTextField = new TextField();                       //Text field for entering the end date 
         grid.add(endTextField, 1, 2);                                   //Adding it to the column one and row tree
         
-        Button nextButton = new Button("Next");                         //Create an object button with a text Next
-        HBox hbBtn = new HBox(10);                                      //Horizintal pane window for button 
+        Button nextButton = new Button("Estimate");                         //Create an object button with a text Next
+        HBox hbBtn = new HBox(10);                                      //Horizintal layout pane wiht 10 pixels space for the button
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);                           //positioning the horizontal layout pane to the right
-        hbBtn.getChildren().add(nextButton);                            //
-        grid.add(hbBtn, 1, 4);
+        hbBtn.getChildren().add(nextButton);                            //The next button is set as a child of the horizotal box pane
+        grid.add(hbBtn, 1, 4);                                          //The horizontal pane is added to the grid in the second column and fourth row
 
-        Scene scene = new Scene(grid, 300, 275);
+        final Text actiontarget = new Text();                           //New text control object for displaying estimated cost
+        grid.add(actiontarget, 0, 6, 2, 1);                                   //Adding the estimated cost text to the grid
+        
+        nextButton.setOnAction(new EventHandler<ActionEvent>() {        //setOnAction method registers an event handler that sets the estimated cost message to show when estimate button is pressed
+ 
+            @Override
+            public void handle(ActionEvent e) {
+                actiontarget.setFill(Color.FIREBRICK);
+                actiontarget.setText("Estimated cost is: ");
+            }   
+        });
+        
+        Scene scene = new Scene(grid, 500, 475);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
